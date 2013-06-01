@@ -93,20 +93,21 @@ public class HomeActivity extends Activity {
     }
 
     private void registerListener(){
-        contentLayout.setOnPageChangeListener(indicatorView);
         contentLayout.setOnPageChangeListener(new ViewPageLayout.OnPageChangeListener() {
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                indicatorView.onPageScrollStateChanged(state);
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                indicatorView.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
+                indicatorView.onPageSelected(position);
+
                 switch(position){
                     case POSITION_MUSIC:
                         setTitle(R.string.nav_music);
