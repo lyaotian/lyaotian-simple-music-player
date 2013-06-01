@@ -27,10 +27,10 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent">
             <fragment
-                    android:id="@+id/nearbyFragment"
+                    android:id="@+id/musicFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    class="cn.lyaotian.simple.music.ui.fragment.NearByFragment"
+                    class="cn.lyaotian.simple.music.ui.fragment.MusicFragment"
                     ></fragment>
             <fragment
                     android:id="@+id/playerFragment"
@@ -39,10 +39,10 @@
                     class="cn.lyaotian.simple.music.ui.fragment.PlayerFragment"
                     ></fragment>
             <fragment
-                    android:id="@+id/musicFragment"
+                    android:id="@+id/nearbyFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    class="cn.lyaotian.simple.music.ui.fragment.MusicFragment"
+                    class="cn.lyaotian.simple.music.ui.fragment.NearByFragment"
                     ></fragment>
         </cn.lyaotian.simple.music.ui.view.ViewPageLayout>
 
