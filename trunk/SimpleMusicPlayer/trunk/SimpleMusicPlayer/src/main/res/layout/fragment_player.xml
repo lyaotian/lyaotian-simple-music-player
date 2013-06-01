@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dip"
+            android:background="#80ffffff">
+        <ImageView
+                android:id="@+id/ivState"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:background="#f00"></ImageView>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/ivState"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dip"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:text="@string/player_song"></TextView>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:textColor="@android:color/white"
+                    android:text="@string/player_artist"></TextView>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

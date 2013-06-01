@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SimpleMusicPlayer</string>
+    <string name="nav_music">My Music</string>
+    <string name="nav_player">Playing</string>
+    <string name="nav_nearby">Near by</string>
+    <string name="player_song">name</string>
+    <string name="player_artist">artist</string>
+</resources>

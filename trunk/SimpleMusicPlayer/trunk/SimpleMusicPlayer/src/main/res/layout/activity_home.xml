@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <cn.lyaotian.simple.music.ui.view.TitlePageIndicator
+            android:id="@+id/indicatorView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_activity">
+
+    </cn.lyaotian.simple.music.ui.view.TitlePageIndicator>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0f0">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher">
+
+        </ImageView>
+        <cn.lyaotian.simple.music.ui.view.ViewPageLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent">
+            <fragment
+                    android:id="@+id/nearbyFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    class="cn.lyaotian.simple.music.ui.fragment.NearByFragment"
+                    ></fragment>
+            <fragment
+                    android:id="@+id/playerFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    class="cn.lyaotian.simple.music.ui.fragment.PlayerFragment"
+                    ></fragment>
+            <fragment
+                    android:id="@+id/musicFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    class="cn.lyaotian.simple.music.ui.fragment.MusicFragment"
+                    ></fragment>
+        </cn.lyaotian.simple.music.ui.view.ViewPageLayout>
+
+    </FrameLayout>
+</LinearLayout>
