@@ -1,4 +1,4 @@
-package test.fragment;
+package cn.lyaotian.simple.music.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
