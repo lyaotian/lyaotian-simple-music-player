@@ -1,9 +1,9 @@
 package cn.lyaotian.simple.music.ui;
 
-import cn.lyaotian.simple.music.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.ui.view.TitlePageIndicator;
 import cn.lyaotian.simple.music.ui.view.ViewPageLayout;
 import net.simonvt.menudrawer.MenuDrawer;
@@ -81,7 +81,7 @@ public class HomeActivity extends Activity {
     private void initMenuDrawer(){
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+        mMenuDrawer = MenuDrawer.attach(this);
         mMenuDrawer.setContentView(R.layout.activity_home);
         mMenuDrawer.setMenuView(R.layout.activity_home_menudrawer);
         mMenuDrawer.peekDrawer();
