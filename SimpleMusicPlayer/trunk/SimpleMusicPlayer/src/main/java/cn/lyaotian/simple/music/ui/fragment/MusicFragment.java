@@ -2,16 +2,20 @@ package cn.lyaotian.simple.music.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.data.media.MediaItem;
 import cn.lyaotian.simple.music.data.media.MediaStoreUtil;
+import cn.lyaotian.simple.music.service.CoreService;
 
 import java.util.ArrayList;
 
@@ -65,6 +69,21 @@ public class MusicFragment extends Fragment {
     }
 
     private void registerListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MediaItem click = adapter.getItem(position);
+                play(click);
+            }
+        });
+    }
+
+    private void play(MediaItem click) {
+        Log.d(TAG, click + "");
+        if(click != null){
+            Intent playIntent = CoreService.getPlayIntent(click);
+            mActivity.startService(playIntent);
+        }
     }
 
     private void loadAsync(){

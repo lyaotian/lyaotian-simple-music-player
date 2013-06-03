@@ -23,7 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".service.CoreService"/>
+        <service android:name=".service.CoreService">
+            <intent-filter>
+                <action android:name="cn.lyaotian.simple.music.service.CoreService"></action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
