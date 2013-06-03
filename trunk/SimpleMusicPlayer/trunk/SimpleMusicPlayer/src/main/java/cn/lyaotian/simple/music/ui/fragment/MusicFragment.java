@@ -13,8 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.lyaotian.simple.music.R;
-import cn.lyaotian.simple.music.data.media.MediaItem;
-import cn.lyaotian.simple.music.data.media.MediaStoreUtil;
+import cn.lyaotian.simple.music.data.MediaItem;
+import cn.lyaotian.simple.music.data.util.MediaStoreUtil;
 import cn.lyaotian.simple.music.service.CoreService;
 
 import java.util.ArrayList;
