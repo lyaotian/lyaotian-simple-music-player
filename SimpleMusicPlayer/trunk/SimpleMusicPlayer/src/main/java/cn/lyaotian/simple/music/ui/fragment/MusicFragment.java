@@ -15,7 +15,7 @@ import android.widget.TextView;
 import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.data.MediaItem;
 import cn.lyaotian.simple.music.data.util.MediaStoreUtil;
-import cn.lyaotian.simple.music.service.CoreService;
+import cn.lyaotian.simple.music.service.PlayService;
 
 import java.util.ArrayList;
 
@@ -81,7 +81,7 @@ public class MusicFragment extends Fragment {
     private void play(MediaItem click) {
         Log.d(TAG, click + "");
         if(click != null){
-            Intent playIntent = CoreService.getPlayIntent(click);
+            Intent playIntent = PlayService.getPlayIntent(click);
             mActivity.startService(playIntent);
         }
     }

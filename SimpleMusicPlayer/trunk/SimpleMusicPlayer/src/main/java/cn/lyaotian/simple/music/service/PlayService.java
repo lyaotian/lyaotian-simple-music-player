@@ -7,25 +7,29 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.data.MediaItem;
 import de.greenrobot.event.EventBus;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by lyaotian on 6/2/13.
  */
-public class CoreService extends Service {
-    public static final String TAG = "CoreService";
+public class PlayService extends Service {
+    public static final String TAG = "PlayService";
     public static final String EXTRA_MEDIA_ITEM = "MediaItem";
     public static final String EXTRA_FUNCTION = "function";
     public static final String FUNCTION_PLAY = "function_play";
     public static final String FUNCTION_STOP = "function_stop";
-    public static final String ACTION = "cn.lyaotian.simple.music.service.CoreService";
+    public static final String ACTION = "cn.lyaotian.simple.music.service.PlayService";
 
     private MediaPlayer mediaPlayer;
-    private EventBus eventBus;
+    private WeakReference<EventBus> eventBusWeak;
+    private MediaItem playing;
 
     public IBinder onBind(Intent intent) {
-        return new CoreServiceBinder();
+        return new PlayServiceBinder();
     }
 
     @Override
@@ -41,19 +45,23 @@ public class CoreService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    private boolean isPlaying(){
+        return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
+
     private void play(Intent intent) {
-        stop(null);
+        if(isPlaying()){
+            stop(null);
+        }
 
         MediaItem data = (MediaItem) intent.getSerializableExtra(EXTRA_MEDIA_ITEM);
         if(data != null){
+            playing = data;
+
             try{
-                if(mediaPlayer == null){
-                    mediaPlayer = new MediaPlayer();
-                }else{
-                    mediaPlayer.reset();
-                }
-                Log.d(TAG, "try to play " + data.filePath);
+                mediaPlayer = new MediaPlayer();
                 mediaPlayer.setDataSource(data.filePath);
+                sendEvent(PlayerEvent.EVENT_FLAG_PREPARING, getString(R.string.play_status_preparing));
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }catch(Exception e){
@@ -75,6 +83,8 @@ public class CoreService extends Service {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
+
+            sendEvent(PlayerEvent.EVENT_FLAG_STOP, getString(R.string.play_status_stop));
         }catch(Exception e){
             showStatus(e.getMessage());
             e.printStackTrace();
@@ -97,6 +107,7 @@ public class CoreService extends Service {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 Log.d(TAG, "media player onPrepared");
+                sendEvent(PlayerEvent.EVENT_FLAG_PLAY, getString(R.string.play_status_start));
             }
         });
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -129,8 +140,8 @@ public class CoreService extends Service {
                         strb.append("MEDIA_ERROR_TIMED_OUT");
                         break;
                 }
-                showStatus("error: " + strb.toString());
 
+                sendEvent(PlayerEvent.EVENT_FLAG_ERROR, getString(R.string.play_status_error, strb.toString()));
                 return false;
             }
         });
@@ -138,7 +149,9 @@ public class CoreService extends Service {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.d(TAG, "media player onCompletion");
+                sendEvent(PlayerEvent.EVENT_FLAG_STOP, getString(R.string.play_status_stop));
 
+                playing = null;
             }
         });
     }
@@ -153,10 +166,24 @@ public class CoreService extends Service {
         return super.onUnbind(intent);
     }
 
-    public class CoreServiceBinder extends Binder{
-        public CoreService getService(){
-            return CoreService.this;
+    public void setEventBus(EventBus eventBus){
+        Log.e(TAG, eventBus + "");
+        this.eventBusWeak = new WeakReference<EventBus>(eventBus);
+    }
+
+    private void sendEvent(int flag, String status){
+        Log.d(TAG, "send event.. flag=" + flag + "; status=" + status);
+        EventBus eventBus = eventBusWeak.get();
+        if(eventBus == null){
+            return;
         }
+
+        PlayerEvent event = new PlayerEvent();
+        event.flag = flag;
+        event.data = playing;
+        event.status = status;
+
+        eventBus.post(event);
     }
 
     public static Intent getPlayIntent(MediaItem mediaItem){
@@ -170,5 +197,32 @@ public class CoreService extends Service {
         Intent intent = new Intent(ACTION);
         intent.putExtra(EXTRA_FUNCTION, FUNCTION_STOP);
         return intent;
+    }
+
+    public class PlayServiceBinder extends Binder{
+        public PlayService getService(){
+            return PlayService.this;
+        }
+    }
+
+    public static class PlayerEvent{
+        public static final int EVENT_FLAG_INVALID = -1;
+        public static final int EVENT_FLAG_PREPARING = 0;
+        public static final int EVENT_FLAG_PLAY = 1;
+        public static final int EVENT_FLAG_PAUSE = 2;
+        public static final int EVENT_FLAG_STOP = 3;
+        public static final int EVENT_FLAG_ERROR = 4;
+
+        public int flag = EVENT_FLAG_INVALID;
+        public MediaItem data;
+        public String status;
+
+        @Override
+        public String toString() {
+            return "PlayerEvent{" +
+                    "flag=" + flag +
+                    ", status='" + status + '\'' +
+                    '}';
+        }
     }
 }

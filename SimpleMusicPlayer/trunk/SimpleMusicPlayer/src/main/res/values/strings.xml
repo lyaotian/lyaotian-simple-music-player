@@ -5,4 +5,9 @@
     <string name="nav_nearby">Near by</string>
     <string name="player_song">name</string>
     <string name="player_artist">artist</string>
+
+    <string name="play_status_error">Error: %1$s</string>
+    <string name="play_status_stop">Stop</string>
+    <string name="play_status_preparing">Preparing</string>
+    <string name="play_status_start">Starting..</string>
 </resources>
