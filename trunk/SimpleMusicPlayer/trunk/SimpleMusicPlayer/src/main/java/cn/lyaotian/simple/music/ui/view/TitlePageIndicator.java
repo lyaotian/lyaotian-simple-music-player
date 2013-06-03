@@ -69,9 +69,6 @@ public class TitlePageIndicator extends View implements ViewPageLayout.OnPageCha
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         this.mCurrentPage = position;
         this.mPageOffset = positionOffset;
-        Log.d(TAG, "position=" + position
-                + "; positionOffset=" + positionOffset
-                + "; positionOffsetPixels=" + positionOffsetPixels);
         invalidate();
     }
 
