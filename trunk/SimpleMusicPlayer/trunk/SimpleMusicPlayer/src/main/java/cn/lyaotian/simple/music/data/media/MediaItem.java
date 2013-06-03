@@ -13,12 +13,14 @@ public class MediaItem {
     public long duration;
     public long size;
     public String mimeType;
+    public String filePath;
 
-    public MediaItem(Cursor cursor){
+    public MediaItem(Cursor cursor) throws Exception{
         size = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE));
         duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
         mimeType = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE));
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
         artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+        filePath = new String(cursor.getBlob(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     }
 }
