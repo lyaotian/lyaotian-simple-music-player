@@ -7,7 +7,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-import cn.lyaotian.simple.music.data.media.MediaItem;
+import cn.lyaotian.simple.music.data.MediaItem;
 import de.greenrobot.event.EventBus;
 
 /**
