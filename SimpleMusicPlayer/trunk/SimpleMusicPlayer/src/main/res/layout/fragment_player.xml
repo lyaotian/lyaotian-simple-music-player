@@ -23,16 +23,22 @@
                 android:orientation="vertical"
                 android:gravity="center_vertical">
             <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="@string/player_song"></TextView>
+                    android:textColor="@android:color/white"></TextView>
             <TextView
+                    android:id="@+id/tvArtist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:textColor="@android:color/white"
-                    android:text="@string/player_artist"></TextView>
+                    android:textColor="@android:color/white"></TextView>
+            <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:textColor="@android:color/white"></TextView>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

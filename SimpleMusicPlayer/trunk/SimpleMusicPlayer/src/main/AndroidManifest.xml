@@ -23,9 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".service.CoreService">
+        <service android:name=".service.PlayService">
             <intent-filter>
-                <action android:name="cn.lyaotian.simple.music.service.CoreService"></action>
+                <action android:name="cn.lyaotian.simple.music.service.PlayService"></action>
             </intent-filter>
         </service>
     </application>
