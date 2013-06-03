@@ -3,10 +3,12 @@ package cn.lyaotian.simple.music.data.media;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
+import java.io.Serializable;
+
 /**
  * Created by lyaotian on 6/2/13.
  */
-public class MediaItem {
+public class MediaItem implements Serializable{
 
     public String title;
     public String artist;
@@ -21,6 +23,14 @@ public class MediaItem {
         mimeType = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE));
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
         artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-        filePath = new String(cursor.getBlob(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        byte [] data = cursor.getBlob(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+        filePath = new String(data, 0 , data.length - 1);
+    }
+
+    @Override
+    public String toString() {
+        return "MediaItem{" +
+                "filePath='" + filePath + '\'' +
+                '}';
     }
 }
