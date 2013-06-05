@@ -19,7 +19,6 @@ public class ViewPageLayout extends ViewGroup {
     private Scroller mScroller;
     private VelocityTracker mVelocityTracker;
     private int mCurrentScreen;
-    private int mDefaultScreen;
     private int mTouchState = TOUCH_STATE_REST;
     private float mLastMotionX;
     private float mLastMotionY;
@@ -42,7 +41,8 @@ public class ViewPageLayout extends ViewGroup {
 
     private void setup() {
         mScroller = new Scroller(mContext);
-        mCurrentScreen = mDefaultScreen;
+        snapToScreen(mCurrentScreen);
+        setWillNotDraw(true);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ViewPageLayout extends ViewGroup {
     /**
      * 跳到指定屏幕
      */
-    public void snapToScreen(int whichScreen) {
+    private void snapToScreen(int whichScreen) {
         // get the valid layout page
         whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
 
@@ -121,8 +121,13 @@ public class ViewPageLayout extends ViewGroup {
         }
     }
 
-    public int getCurScreen() {
+    public int getCurrentScreen() {
         return mCurrentScreen;
+    }
+
+    public void setCurrentScreen(int screen){
+        this.mCurrentScreen = screen;
+        requestLayout();
     }
 
     @Override

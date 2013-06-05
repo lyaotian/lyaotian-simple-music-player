@@ -48,6 +48,14 @@ public class HomeActivity extends Activity {
         navs.add(getString(R.string.nav_player));
         navs.add(getString(R.string.nav_nearby));
         indicatorView.setTitles(navs);
+//        contentLayout.setCurrentScreen(1);
+//        Handler h = new Handler(Looper.getMainLooper());
+//        h.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                contentLayout.snapToScreen(1);
+//            }
+//        }, 1000);
     }
 
     @Override
@@ -84,7 +92,7 @@ public class HomeActivity extends Activity {
         mMenuDrawer = MenuDrawer.attach(this);
         mMenuDrawer.setContentView(R.layout.activity_home);
         mMenuDrawer.setMenuView(R.layout.activity_home_menudrawer);
-        mMenuDrawer.peekDrawer();
+//        mMenuDrawer.peekDrawer();
     }
 
     private void findViews(){
