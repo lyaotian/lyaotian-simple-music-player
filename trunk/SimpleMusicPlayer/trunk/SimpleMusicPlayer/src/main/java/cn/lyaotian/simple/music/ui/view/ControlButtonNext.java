@@ -1,6 +1,7 @@
 package cn.lyaotian.simple.music.ui.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -8,24 +9,29 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 
 /**
- * Created by lyaotian on 6/4/13.
+ * Created by lyaotian on 6/5/13.
  */
-public class ControlButtonPlay extends BaseControlButton {
-    public static final String TAG = "ControlButtonPlay";
+public class ControlButtonNext extends BaseControlButton {
+    public static final String TAG = "ControlButtonNext";
+    public static final float GAP_ICON = 0.12f;
+    public static final float GAP_ICON_VERTICAL = 0.2f;
+    public static final float RECT_SIZE = 0.05f;
+    public static final float RECT_OFFSET = 0.15f;
 
     private Paint paint;
     private Path trianglePath = new Path();
 
-    public ControlButtonPlay(Context context) {
+    public ControlButtonNext(Context context) {
         super(context);
     }
 
-    public ControlButtonPlay(Context context, AttributeSet attrs) {
+    public ControlButtonNext(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ControlButtonPlay(Context context, AttributeSet attrs, int defStyle) {
+    public ControlButtonNext(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+//        parseAttributes(context.obtainStyledAttributes());
     }
 
     @Override
@@ -34,20 +40,42 @@ public class ControlButtonPlay extends BaseControlButton {
         paint.setAntiAlias(true);
     }
 
+    private void parseAttributes(TypedArray a){
+        a.recycle();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         drawTriangle(canvas);
+        drawRect(canvas);
     }
+
+    private void drawRect(Canvas canvas) {
+        int halfWidth = width/2;
+        float rectVertical = GAP_ICON_VERTICAL * width;
+        float rectSize = RECT_SIZE * width;
+        float rectOffect = RECT_OFFSET * width;
+
+        float left = halfWidth - rectSize;
+        float right = halfWidth + rectSize;
+        float top = halfWidth - rectVertical;
+        float bottom = halfWidth + rectVertical;
+        canvas.translate(rectOffect, 0);
+        canvas.drawRect(left, top, right, bottom, paint);
+        canvas.translate(-rectOffect, 0);
+    }
+
 
     private void drawTriangle(Canvas canvas) {
         updateTrianglePath();
 
         int halfWidth = width/2;
+        canvas.translate(-10, 0);
         canvas.rotate(90, halfWidth, halfWidth);
         canvas.drawPath(trianglePath, paint);
         canvas.rotate(270, halfWidth, halfWidth);
+        canvas.translate(10, 0);
 
     }
 

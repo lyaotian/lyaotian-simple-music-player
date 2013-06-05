@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
         <cn.lyaotian.simple.music.ui.view.ControlButtonPrev
-                android:id="@+id/btnPlay"
+                android:id="@+id/btnPrev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -50,15 +50,22 @@
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
+        <cn.lyaotian.simple.music.ui.view.ControlButtonNext
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="#40ffffff"
+                />
         <cn.lyaotian.simple.music.ui.view.ControlButtonPause
-                android:id="@+id/btnPlay"
+                android:id="@+id/btnPause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
         <cn.lyaotian.simple.music.ui.view.ControlButtonStop
-                android:id="@+id/btnPlay"
+                android:id="@+id/btnStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
