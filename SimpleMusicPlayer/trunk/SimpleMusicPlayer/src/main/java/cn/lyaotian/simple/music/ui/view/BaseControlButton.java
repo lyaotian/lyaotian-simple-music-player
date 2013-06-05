@@ -9,7 +9,7 @@ import android.view.View;
 import cn.lyaotian.simple.music.R;
 
 /**
- * Created by lyaotian on 6/4/13.
+ * Created by lyaotian on 6/5/13.
  */
 public abstract class BaseControlButton extends View {
     public static final float GAP_ICON = 0.12f;
@@ -18,7 +18,6 @@ public abstract class BaseControlButton extends View {
 
     protected int width;
     protected int height;
-    protected Paint paint;
     protected Paint circlePaint;
 
     public BaseControlButton(Context context) {
@@ -37,18 +36,13 @@ public abstract class BaseControlButton extends View {
 //        parseAttributes(context.obtainStyledAttributes());
     }
 
-    private void setup() {
+    protected void setup() {
         Resources resources = getResources();
         width = resources.getDimensionPixelSize(R.dimen.control_button_default_size);
         height = width;
 
-        paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setColor(Color.WHITE);
-
         circlePaint = new Paint();
         circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.WHITE);
         circlePaint.setStyle(Paint.Style.STROKE);
         circlePaint.setStrokeWidth(CIRCLE_STOCKE);
     }
@@ -65,9 +59,14 @@ public abstract class BaseControlButton extends View {
     }
 
     private void drawCircle(Canvas canvas) {
+        circlePaint.setColor(getCurrentColor());
         int halfWidth = width / 2;
         float r = halfWidth - GAP_CIRCLE * width;
         canvas.drawCircle(halfWidth, halfWidth, r, circlePaint);
+    }
+
+    protected int getCurrentColor() {
+        return Color.WHITE;
     }
 
     @Override

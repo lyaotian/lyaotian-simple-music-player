@@ -3,12 +3,13 @@ package cn.lyaotian.simple.music.ui.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
 
 /**
- * Created by lyaotian on 6/4/13.
+ * Created by lyaotian on 6/5/13.
  */
 public class ControlButtonPrev extends BaseControlButton {
     public static final String TAG = "ControlButtonPrev";
@@ -17,6 +18,7 @@ public class ControlButtonPrev extends BaseControlButton {
     public static final float RECT_SIZE = 0.05f;
     public static final float RECT_OFFSET = 0.15f;
 
+    private Paint paint;
     private Path trianglePath = new Path();
 
     public ControlButtonPrev(Context context) {
@@ -30,6 +32,12 @@ public class ControlButtonPrev extends BaseControlButton {
     public ControlButtonPrev(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 //        parseAttributes(context.obtainStyledAttributes());
+    }
+
+    @Override
+    protected void setup(){
+        paint = new Paint();
+        paint.setAntiAlias(true);
     }
 
     private void parseAttributes(TypedArray a){
@@ -53,9 +61,9 @@ public class ControlButtonPrev extends BaseControlButton {
         float right = halfWidth + rectSize;
         float top = halfWidth - rectVertical;
         float bottom = halfWidth + rectVertical;
-        canvas.translate(rectOffect, 0);
-        canvas.drawRect(left, top, right, bottom, paint);
         canvas.translate(-rectOffect, 0);
+        canvas.drawRect(left, top, right, bottom, paint);
+        canvas.translate(rectOffect, 0);
     }
 
 
@@ -63,11 +71,11 @@ public class ControlButtonPrev extends BaseControlButton {
         updateTrianglePath();
 
         int halfWidth = width/2;
-        canvas.translate(-10, 0);
-        canvas.rotate(90, halfWidth, halfWidth);
-        canvas.drawPath(trianglePath, paint);
-        canvas.rotate(270, halfWidth, halfWidth);
         canvas.translate(10, 0);
+        canvas.rotate(270, halfWidth, halfWidth);
+        canvas.drawPath(trianglePath, paint);
+        canvas.rotate(90, halfWidth, halfWidth);
+        canvas.translate(-10, 0);
 
     }
 

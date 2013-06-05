@@ -2,12 +2,13 @@ package cn.lyaotian.simple.music.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
 
 /**
- * Created by lyaotian on 6/4/13.
+ * Created by lyaotian on 6/5/13.
  */
 public class ControlButtonPause extends BaseControlButton {
     public static final String TAG = "ControlButtonPause";
@@ -15,6 +16,7 @@ public class ControlButtonPause extends BaseControlButton {
     public static final float MIDDLE_GAP = 0.05f;
     public static final float GAP_ICON = 0.2f;
 
+    private Paint paint;
     private Path p1 = new Path();
     private Path p2 = new Path();
 
@@ -29,6 +31,12 @@ public class ControlButtonPause extends BaseControlButton {
     public ControlButtonPause(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 //        parseAttributes(context.obtainStyledAttributes());
+    }
+
+    @Override
+    protected void setup(){
+        paint = new Paint();
+        paint.setAntiAlias(true);
     }
 
     @Override

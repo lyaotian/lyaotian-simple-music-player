@@ -48,14 +48,7 @@ public class HomeActivity extends Activity {
         navs.add(getString(R.string.nav_player));
         navs.add(getString(R.string.nav_nearby));
         indicatorView.setTitles(navs);
-//        contentLayout.setCurrentScreen(1);
-//        Handler h = new Handler(Looper.getMainLooper());
-//        h.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                contentLayout.snapToScreen(1);
-//            }
-//        }, 1000);
+        contentLayout.setCurrentScreen(1);
     }
 
     @Override
