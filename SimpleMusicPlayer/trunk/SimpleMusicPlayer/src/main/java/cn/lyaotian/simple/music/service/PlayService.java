@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.data.MediaItem;
+import cn.lyaotian.simple.music.data.PlayList;
 import de.greenrobot.event.EventBus;
 
 import java.lang.ref.WeakReference;
@@ -18,15 +19,18 @@ import java.lang.ref.WeakReference;
  */
 public class PlayService extends Service {
     public static final String TAG = "PlayService";
-    public static final String EXTRA_MEDIA_ITEM = "MediaItem";
+    private static final String EXTRA_PLAY_LIST = "PlayList";
     public static final String EXTRA_FUNCTION = "function";
     public static final String FUNCTION_PLAY = "function_play";
+    public static final String FUNCTION_PAUSE = "function_pause";
     public static final String FUNCTION_STOP = "function_stop";
     public static final String ACTION = "cn.lyaotian.simple.music.service.PlayService";
 
     private MediaPlayer mediaPlayer;
     private WeakReference<EventBus> eventBusWeak;
     private MediaItem playing;
+    private PlayList playList;
+    private boolean isPause;
 
     public IBinder onBind(Intent intent) {
         return new PlayServiceBinder();
@@ -40,6 +44,8 @@ public class PlayService extends Service {
                 play(intent);
             }else if(FUNCTION_STOP.equals(function)){
                 stop(intent);
+            }else if(FUNCTION_PAUSE.equals(function)){
+//                pause(intent);
             }
         }
         return super.onStartCommand(intent, flags, startId);
@@ -50,24 +56,32 @@ public class PlayService extends Service {
     }
 
     private void play(Intent intent) {
+
         if(isPlaying()){
             stop(null);
         }
 
-        MediaItem data = (MediaItem) intent.getSerializableExtra(EXTRA_MEDIA_ITEM);
-        if(data != null){
-            playing = data;
+        //get playlist
+        PlayList playListData = (PlayList) intent.getSerializableExtra(EXTRA_PLAY_LIST);
+        if(playListData != null && ! playListData.list.isEmpty()){
+            playList = playListData;
+            playing = playList.list.get(0);
+        }
 
-            try{
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setDataSource(data.filePath);
-                sendEvent(PlayerEvent.EVENT_FLAG_PREPARING, getString(R.string.play_status_preparing));
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            }catch(Exception e){
-                showStatus(e.getMessage());
-                e.printStackTrace();
-            }
+        if(playing == null){
+            return;
+        }
+
+        //play ...
+        setup();
+        try{
+            mediaPlayer.setDataSource(playing.filePath);
+            sendEvent(PlayerEvent.EVENT_FLAG_PREPARING, getString(R.string.play_status_preparing));
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }catch(Exception e){
+            showStatus(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -76,6 +90,7 @@ public class PlayService extends Service {
     }
 
     private void stop(Intent intent) {
+        isPause = false;
         if(mediaPlayer == null){
             return;
         }
@@ -95,11 +110,11 @@ public class PlayService extends Service {
     public void onCreate() {
         super.onCreate();
         setup();
-        registerListener();
     }
 
     private void setup() {
         mediaPlayer = new MediaPlayer();
+        registerListener();
     }
 
     private void registerListener() {
@@ -149,11 +164,36 @@ public class PlayService extends Service {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.d(TAG, "media player onCompletion");
-                sendEvent(PlayerEvent.EVENT_FLAG_STOP, getString(R.string.play_status_stop));
-
-                playing = null;
+                if (playList != null) {
+                    playNext();
+                } else {
+                    playing = null;
+                    sendEvent(PlayerEvent.EVENT_FLAG_STOP, getString(R.string.play_status_stop));
+                }
             }
         });
+    }
+
+    private void playNext(){
+        int currentIndex = playList.list.indexOf(playing);
+        int playListSize = playList.list.size();
+        if(currentIndex + 1 >= playListSize){
+            sendEvent(PlayerEvent.EVENT_FLAG_STOP, getString(R.string.play_status_stop));
+            return;
+        }
+
+        playing = playList.list.get(currentIndex + 1);
+        if(mediaPlayer == null){
+            return;
+        }
+        try {
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(playing.filePath);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -186,10 +226,16 @@ public class PlayService extends Service {
         eventBus.post(event);
     }
 
-    public static Intent getPlayIntent(MediaItem mediaItem){
+    public static Intent getPauseIntent(){
+        Intent intent = new Intent(ACTION);
+        intent.putExtra(EXTRA_FUNCTION, FUNCTION_PAUSE);
+        return intent;
+    }
+
+    public static Intent getPlayIntent(PlayList playList){
         Intent intent = new Intent(ACTION);
         intent.putExtra(EXTRA_FUNCTION, FUNCTION_PLAY);
-        intent.putExtra(EXTRA_MEDIA_ITEM, mediaItem);
+        intent.putExtra(EXTRA_PLAY_LIST, playList);
         return intent;
     }
 
