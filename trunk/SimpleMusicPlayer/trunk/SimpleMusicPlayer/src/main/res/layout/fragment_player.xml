@@ -5,69 +5,81 @@
         android:layout_height="match_parent"
         android:background="@android:color/black">
     <LinearLayout
+            android:id="@+id/showLayout"
             android:layout_width="match_parent"
             android:layout_height="80dip"
-            android:layout_alignParentRight="true"
             android:paddingLeft="10dip"
             android:orientation="vertical"
             android:gravity="center_vertical"
-            android:background="#20ffffff">
+            android:background="#40ffffff">
         <TextView
                 android:id="@+id/tvTitle"
+                style="@style/text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="title"
                 android:textColor="@android:color/white"></TextView>
         <TextView
                 android:id="@+id/tvArtist"
+                style="@style/text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="title"
                 android:textColor="@android:color/white"></TextView>
         <TextView
                 android:id="@+id/tvStatus"
+                style="@style/text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="title"
                 android:textColor="@android:color/white"></TextView>
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/controlLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dip"
             android:layout_alignParentBottom="true">
         <cn.lyaotian.simple.music.ui.view.ControlButtonPrev
                 android:id="@+id/btnPrev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
         <cn.lyaotian.simple.music.ui.view.ControlButtonPlay
                 android:id="@+id/btnPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
         <cn.lyaotian.simple.music.ui.view.ControlButtonNext
                 android:id="@+id/btnNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
         <cn.lyaotian.simple.music.ui.view.ControlButtonPause
                 android:id="@+id/btnPause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
         <cn.lyaotian.simple.music.ui.view.ControlButtonStop
                 android:id="@+id/btnStop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:background="#40ffffff"
                 />
