@@ -2,10 +2,7 @@ package cn.lyaotian.simple.music.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.*;
 import android.util.AttributeSet;
 
 /**
@@ -36,6 +33,7 @@ public class ControlButtonNext extends BaseControlButton {
 
     @Override
     protected void setup(){
+        super.setup();
         paint = new Paint();
         paint.setAntiAlias(true);
     }
@@ -47,6 +45,8 @@ public class ControlButtonNext extends BaseControlButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        paint.setColor(getCurrentColor());
+
         drawTriangle(canvas);
         drawRect(canvas);
     }

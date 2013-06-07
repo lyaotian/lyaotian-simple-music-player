@@ -27,6 +27,11 @@ public class PlayerFragment extends Fragment {
     private TextView tvTitle;
     private TextView tvArtist;
     private TextView tvStatus;
+    private View btnPrev;
+    private View btnNext;
+    private View btnPlay;
+    private View btnPause;
+    private View btnStop;
 
     //data
     private PlayService playService;
@@ -93,12 +98,47 @@ public class PlayerFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+        registerListener();
+    }
+
+    private void registerListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.btnNext:
+                        break;
+                    case R.id.btnPrev:
+                        break;
+                    case R.id.btnPlay:
+                        mActivity.startService(PlayService.getPlayIntent(null));
+                        break;
+                    case R.id.btnPause:
+                        mActivity.startService(PlayService.getPauseIntent());
+                        break;
+                    case R.id.btnStop:
+                        mActivity.startService(PlayService.getStopIntent());
+                        break;
+                }
+            }
+        };
+        btnNext.setOnClickListener(onClickListener);
+        btnPrev.setOnClickListener(onClickListener);
+        btnPlay.setOnClickListener(onClickListener);
+        btnPause.setOnClickListener(onClickListener);
+        btnStop.setOnClickListener(onClickListener);
     }
 
     private void findViews(View view) {
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvArtist = (TextView) view.findViewById(R.id.tvArtist);
         tvStatus = (TextView) view.findViewById(R.id.tvStatus);
+        btnPrev = view.findViewById(R.id.btnPrev);
+        btnNext = view.findViewById(R.id.btnNext);
+        btnPlay = view.findViewById(R.id.btnPlay);
+        btnPause = view.findViewById(R.id.btnPause);
+        btnStop = view.findViewById(R.id.btnStop);
     }
 
     public void onEventMainThread(PlayService.PlayerEvent event) {

@@ -36,6 +36,8 @@ public class ControlButtonPrev extends BaseControlButton {
 
     @Override
     protected void setup(){
+        super.setup();
+
         paint = new Paint();
         paint.setAntiAlias(true);
     }
@@ -47,6 +49,8 @@ public class ControlButtonPrev extends BaseControlButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        paint.setColor(getCurrentColor());
+
         drawTriangle(canvas);
         drawRect(canvas);
     }

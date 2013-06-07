@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import cn.lyaotian.simple.music.R;
 import cn.lyaotian.simple.music.data.MediaItem;
+import cn.lyaotian.simple.music.data.PlayList;
 import cn.lyaotian.simple.music.data.util.MediaStoreUtil;
 import cn.lyaotian.simple.music.service.PlayService;
 
@@ -72,16 +72,17 @@ public class MusicFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MediaItem click = adapter.getItem(position);
-                play(click);
+                PlayList playList = new PlayList();
+                playList.name = System.currentTimeMillis() + "";
+                playList.list.addAll(adapter.getDataList());
+                play(playList);
             }
         });
     }
 
-    private void play(MediaItem click) {
-        Log.d(TAG, click + "");
-        if(click != null){
-            Intent playIntent = PlayService.getPlayIntent(click);
+    private void play(PlayList playList) {
+        if(playList != null){
+            Intent playIntent = PlayService.getPlayIntent(playList);
             mActivity.startService(playIntent);
         }
     }
@@ -100,6 +101,10 @@ public class MusicFragment extends Fragment {
 
         public MusicAdapter(ArrayList<MediaItem> dataList){
             this.dataList = dataList;
+        }
+
+        private ArrayList<MediaItem> getDataList() {
+            return dataList;
         }
 
         @Override
